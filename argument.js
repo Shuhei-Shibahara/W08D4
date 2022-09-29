@@ -110,10 +110,11 @@ console.log(sum1(5)(30)(20)(1)); // => 56
 
 Function.prototype.curry = function(numArgs){
   let arr = []
-  const _curried = (args) => {
+  let that = this;
+  const _curried = function(args){
     arr.push(args)
     if (arr.length === numArgs){
-      return this(...arr)
+      return that.apply(that,arr)
     } else {
       return _curried;
     }
