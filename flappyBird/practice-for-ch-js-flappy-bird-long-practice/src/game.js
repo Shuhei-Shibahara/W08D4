@@ -4,10 +4,11 @@ export default class FlappyBird {
   constructor(canvas) {
     this.ctx = canvas.getContext("2d");
     this.dimensions = { width: canvas.width, height: canvas.height };
+    canvas.addEventListener('mousedown', this.click.bind(this))
   }
 
   animate() {
-    this.level.drawBackground(this.ctx)
+    this.level.animate(this.ctx);
     this.bird.animate(this.ctx);
     if (this.running === true){
       requestAnimationFrame(this.animate.bind(this, this.ctx));
@@ -25,13 +26,21 @@ export default class FlappyBird {
     this.running = true;
     this.animate();
   }
+
+  click(){
+    if (this.running === true){
+      this.bird.flap();
+    } else {
+      this.play();
+    }
+  }
 }
 class Bird {
   constructor(dimensions){
     this.velocity = 0;
-    this.dimensions = dimensions
-    this.positiony = this.dimensions.height/2 
-    this.positionx = this.dimensions.width/3
+    this.dimensions = dimensions;
+    this.positiony = this.dimensions.height/2;
+    this.positionx = this.dimensions.width/3;
   }
   
 
@@ -47,12 +56,15 @@ class Bird {
 
   flap(){
     this.velocity = -8;
-
   }
 
   drawBird(ctx){
     ctx.fillStyle = 'yellow'
-    ctx.fillRect(this.positionx, this.positiony, 50, 60);
+    ctx.fillRect(this.positionx, this.positiony, 40, 50);
+  }
+
+  getBounds(){
+    
   }
 }
 
