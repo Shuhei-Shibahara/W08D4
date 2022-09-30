@@ -10,15 +10,15 @@ export default class FlappyBird {
     this.level.drawBackground(this.ctx)
     this.bird.animate(this.ctx);
     if (this.running === true){
-      window.requestAnimationFrame(this.animate);
+      requestAnimationFrame(this.animate.bind(this, this.ctx));
     }
   }
 
   restart(){
-    this.running = false;
     this.level = new Level(this.dimensions)
     this.bird = new Bird(this.dimensions)
-    this.animate()
+    this.running = false;
+    this.play();
   }
 
   play(){
